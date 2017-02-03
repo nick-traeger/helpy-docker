@@ -16,8 +16,7 @@ RUN apk --update --no-cache add \
     tzdata \
   && adduser -S $HELPY_USER \
   && mkdir -p $HELPY_HOME \
-  && git clone --depth=1 https://github.com/helpyio/helpy.git $HELPY_HOME \
-  && apk del git
+  && git clone --depth=1 https://github.com/helpyio/helpy.git $HELPY_HOME
 
 # Copy database config and run script into the container
 COPY database.yml $HELPY_HOME/config/database.yml
@@ -46,12 +45,14 @@ RUN apk --update --no-cache add --virtual build-deps \
   && DB_ADAPTER=nulldb bundle exec rake assets:precompile \
   && apk del build-deps
 
-# Due to a weird issue with one of the gems, execute this permissions change:
+# Due to a weird issue with one of the gems, execute this permissions change
 RUN chmod +r /usr/local/bundle/gems/griddler-mandrill-1.1.3/lib/griddler/mandrill/adapter.rb
 
-# Link log files and set permissions
+# Create directories, link log files, and set permissions
 RUN ln -sf /dev/stdout /helpy/log/production.log \
+  && mkdir -p $HELPY_HOME/uploads $HELPY_HOME/tmp \
   && chown -R $HELPY_USER $HELPY_HOME /usr/local/lib/ruby /usr/local/bundle \
+  && chmod -R 777 $HELPY_HOME/uploads $HELPY_HOME/tmp \
   && chmod +x $HELPY_HOME/run.sh
 
 USER $HELPY_USER
