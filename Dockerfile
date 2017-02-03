@@ -56,5 +56,6 @@ RUN ln -sf /dev/stdout /helpy/log/production.log \
   && chmod +x $HELPY_HOME/run.sh
 
 USER $HELPY_USER
+EXPOSE 8080
 
 CMD ["./run.sh"]
