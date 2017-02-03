@@ -50,6 +50,9 @@ RUN apk --update --no-cache add --virtual build-deps \
 # Due to a weird issue with one of the gems, execute this permissions change
 RUN chmod +r /usr/local/bundle/gems/griddler-mandrill-1.1.3/lib/griddler/mandrill/adapter.rb
 
+# Patch routes to properly mount Griddler
+RUN sed -i "s|mount_griddler|post '/email/inbound' => 'griddler/emails#create'|" $HELPY_HOME/config/routes.rb
+
 # Create directories, link log files, and set permissions
 RUN ln -sf /dev/stdout /helpy/log/production.log \
   && mkdir -p $HELPY_HOME/public/uploads $HELPY_HOME/tmp \
