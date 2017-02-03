@@ -30,6 +30,9 @@ RUN sed -i '/ruby "2.2.1"/d' $HELPY_HOME/Gemfile
 RUN echo 'gem "activerecord-nulldb-adapter"' >> $HELPY_HOME/Gemfile \
   && echo 'gem "rails_12factor"' >> $HELPY_HOME/Gemfile
 
+# Replace Mailin Griddler adapter with a patched version
+RUN sed -i "s|gem 'griddler-mailin'|gem 'griddler-mailin', git: 'https://github.com/ComputerScienceHouse/griddler-mailin', branch: 'master'|" $HELPY_HOME/Gemfile
+
 # Add the Slack integration gem to the Gemfile if the HELPY_SLACK_INTEGRATION_ENABLED is true
 # Use `test` for sh compatibility, also use only one `=`. also for sh compatibility
 RUN test "$HELPY_SLACK_INTEGRATION_ENABLED" = "true" && sed -i '$ a\gem "helpy_slack", git: "https://github.com/helpyio/helpy_slack.git", branch: "master"' $HELPY_HOME/Gemfile
