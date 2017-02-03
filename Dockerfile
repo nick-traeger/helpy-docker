@@ -26,7 +26,9 @@ COPY run.sh $HELPY_HOME/run.sh
 RUN sed -i '/ruby "2.2.1"/d' $HELPY_HOME/Gemfile
 
 # Add NullDB to Gemfile to allow us to precompile assets at build time
-RUN echo 'gem "activerecord-nulldb-adapter"' >> $HELPY_HOME/Gemfile
+# Add the 12factor gem to send logs to stdout and serve static assets
+RUN echo 'gem "activerecord-nulldb-adapter"' >> $HELPY_HOME/Gemfile \
+  && echo 'gem "rails_12factor"' >> $HELPY_HOME/Gemfile
 
 # Add the Slack integration gem to the Gemfile if the HELPY_SLACK_INTEGRATION_ENABLED is true
 # Use `test` for sh compatibility, also use only one `=`. also for sh compatibility
