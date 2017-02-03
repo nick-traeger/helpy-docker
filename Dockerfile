@@ -50,9 +50,9 @@ RUN chmod +r /usr/local/bundle/gems/griddler-mandrill-1.1.3/lib/griddler/mandril
 
 # Create directories, link log files, and set permissions
 RUN ln -sf /dev/stdout /helpy/log/production.log \
-  && mkdir -p $HELPY_HOME/uploads $HELPY_HOME/tmp \
+  && mkdir -p $HELPY_HOME/public/uploads $HELPY_HOME/tmp \
   && chown -R $HELPY_USER $HELPY_HOME /usr/local/lib/ruby /usr/local/bundle \
-  && chmod -R 777 $HELPY_HOME/uploads $HELPY_HOME/tmp \
+  && chmod -R 777 $HELPY_HOME/public/uploads $HELPY_HOME/tmp \
   && chmod +x $HELPY_HOME/run.sh
 
 USER $HELPY_USER
