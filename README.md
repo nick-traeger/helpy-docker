@@ -7,7 +7,7 @@ This repository contains the neccessary files to build and run your own containe
 This image is available on DockerHub. To pull it, run:
 
 ```
-docker pull computersciencehouse/helpy
+docker pull shyper/helpy-docker
 ```
 
 ## Usage
