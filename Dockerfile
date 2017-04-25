@@ -29,7 +29,7 @@ RUN sed -i '/ruby "2.2.1"/d' $HELPY_HOME/Gemfile
 # Add the 12factor gem to send logs to stdout and serve static assets
 # Add sentry to Gemfile to log errors
 RUN echo 'gem "activerecord-nulldb-adapter"' >> $HELPY_HOME/Gemfile \
-  && echo 'gem "rails_12factor"' >> $HELPY_HOME/Gemfile
+  && echo 'gem "rails_12factor"' >> $HELPY_HOME/Gemfile \
   && echo 'gem "sentry-raven"' >> $HELPY_HOME/Gemfile
 
 # Replace Mailin Griddler adapter with a patched version
