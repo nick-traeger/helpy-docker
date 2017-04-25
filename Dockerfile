@@ -27,8 +27,10 @@ RUN sed -i '/ruby "2.2.1"/d' $HELPY_HOME/Gemfile
 
 # Add NullDB to Gemfile to allow us to precompile assets at build time
 # Add the 12factor gem to send logs to stdout and serve static assets
+# Add sentry to Gemfile to log errors
 RUN echo 'gem "activerecord-nulldb-adapter"' >> $HELPY_HOME/Gemfile \
   && echo 'gem "rails_12factor"' >> $HELPY_HOME/Gemfile
+  && echo 'gem "sentry-raven"' >> $HELPY_HOME/Gemfile
 
 # Replace Mailin Griddler adapter with a patched version
 RUN sed -i "s|gem 'griddler-mailin'|gem 'griddler-mailin', git: 'https://github.com/ComputerScienceHouse/griddler-mailin', branch: 'master'|" $HELPY_HOME/Gemfile
